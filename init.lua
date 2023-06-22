@@ -69,7 +69,7 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-unimpaired',
-
+  'mbbill/undotree',
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
@@ -211,11 +211,20 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- Tabs
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
+vim.wo.relativenumber = true
+
+-- Undo file
+vim.o.undofile = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -228,8 +237,6 @@ vim.o.clipboard = 'unnamedplus'
 -- Enable break indent
 vim.o.breakindent = true
 
--- Save undo history
-vim.o.undofile = true
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -308,7 +315,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'lua', 'python', 'rust', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'markdown', 'markdown_inline', 'lua', 'python', 'rust', 'typescript', 'vimdoc', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -516,5 +523,7 @@ vim.keymap.set({'n'}, '<leader>gg', "<cmd>Git<cr>", { silent = true})
 vim.keymap.set({'n'}, '<leader>gw', "<cmd>Gwrite<cr>", { silent = true})
 vim.keymap.set({'n'}, '<leader>gc', "<cmd>Git commit<cr>", { silent = true})
 vim.keymap.set({'n'}, '<leader>gp', "<cmd>Git push<cr>", { silent = true})
+vim.keymap.set('n', '<leader>un', vim.cmd.UndotreeToggle)
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
