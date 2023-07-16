@@ -8,13 +8,18 @@ return {
         null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.autopep8,
         null_ls.builtins.formatting.sqlfluff,
-        null_ls.builtins.diagnostics.djlint.with({
-          filetypes = { "html", "jinja"}
-        }),
+        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.rustywind,
+        null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.djlint.with({
-          filetypes = { "html", "jinja"}
+          filetypes = { "html", "jinja" }
         }),
-        null_ls.builtins.diagnostics.flake8
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.diagnostics.djlint.with({
+          filetypes = { "html", "jinja" }
+        }),
+        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.diagnostics.shellcheck,
       }
     }
   end,

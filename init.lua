@@ -85,7 +85,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -310,6 +310,7 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -434,10 +435,12 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-
+  gopls = {},
+  pyright = {},
+  rust_analyzer = {},
+  tailwindcss = {},
+  tsserver = {},
+  volar = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -518,12 +521,14 @@ cmp.setup {
   },
 }
 -- Start custom keymaps
-vim.keymap.set({'n'}, '<leader>f', vim.lsp.buf.format )
-vim.keymap.set({'n'}, '<leader>gg', "<cmd>Git<cr>", { silent = true})
-vim.keymap.set({'n'}, '<leader>gw', "<cmd>Gwrite<cr>", { silent = true})
-vim.keymap.set({'n'}, '<leader>gc', "<cmd>Git commit<cr>", { silent = true})
-vim.keymap.set({'n'}, '<leader>gp', "<cmd>Git push<cr>", { silent = true})
-vim.keymap.set('n', '<leader>un', vim.cmd.UndotreeToggle)
+vim.keymap.set({ 'n' }, '<leader>f', function() return vim.lsp.buf.format{async = true} end, {desc = '[F]ormat'})
+vim.keymap.set({ 'n' }, '<leader>gg', "<cmd>Git<cr>", { silent = true })
+vim.keymap.set({ 'n' }, '<leader>gw', "<cmd>Gwrite<cr>", { silent = true })
+vim.keymap.set({ 'n' }, '<leader>gc', "<cmd>Git commit<cr>", { silent = true })
+vim.keymap.set({ 'n' }, '<leader>gp', "<cmd>Git push<cr>", { silent = true })
+vim.keymap.set({ 'n' }, '<leader>l', "<cmd>Lazy<cr>", { desc = '[L]azy', silent = true })
+vim.keymap.set({ 'n' }, '<leader>m', "<cmd>Mason<cr>", { desc = '[M]ason', silent = true })
+vim.keymap.set('n', '<leader>un', vim.cmd.UndotreeToggle, { desc = 'Toggle [UN]do tree' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
