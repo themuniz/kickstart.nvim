@@ -1,40 +1,3 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-  And then you can explore or search through `:help lua-guide`
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -105,6 +68,9 @@ require('lazy').setup({
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+
+      -- Adds SQL support
+      'kristijanhusak/vim-dadbod-completion',
     },
   },
 
@@ -219,6 +185,8 @@ vim.o.expandtab = true
 -- Set highlight on search
 vim.o.hlsearch = false
 
+vim.o.cursorline = true
+
 -- Make line numbers default
 vim.wo.number = true
 vim.wo.relativenumber = true
@@ -236,7 +204,6 @@ vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
-
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -311,6 +278,8 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>sj', require('telescope.builtin').jumplist, { desc = '[S]earch [J]umplist' })
+vim.keymap.set('n', '<leader>sm', require('telescope.builtin').marks, { desc = '[S]earch [M]arks' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -520,14 +489,24 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+cmp.setup.filetype('sql', {
+  sources = cmp.config.sources {
+    { name = 'vim-dadbod-completion' },
+    { name = 'luasnip' },
+  },
+})
+
 -- Start custom keymaps
-vim.keymap.set({ 'n' }, '<leader>f', function() return vim.lsp.buf.format{async = true} end, {desc = '[F]ormat'})
-vim.keymap.set({ 'n' }, '<leader>gg', "<cmd>Git<cr>", { silent = true })
-vim.keymap.set({ 'n' }, '<leader>gw', "<cmd>Gwrite<cr>", { silent = true })
-vim.keymap.set({ 'n' }, '<leader>gc', "<cmd>Git commit<cr>", { silent = true })
-vim.keymap.set({ 'n' }, '<leader>gp', "<cmd>Git push<cr>", { silent = true })
-vim.keymap.set({ 'n' }, '<leader>l', "<cmd>Lazy<cr>", { desc = '[L]azy', silent = true })
-vim.keymap.set({ 'n' }, '<leader>m', "<cmd>Mason<cr>", { desc = '[M]ason', silent = true })
+vim.keymap.set({ 'n' }, '<leader>f', function()
+  return vim.lsp.buf.format { async = true }
+end, { desc = '[F]ormat' })
+vim.keymap.set({ 'n' }, '<leader>gg', '<cmd>Git<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<leader>gw', '<cmd>Gwrite<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<leader>gc', '<cmd>Git commit<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<leader>gp', '<cmd>Git push<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy', silent = true })
+vim.keymap.set({ 'n' }, '<leader>m', '<cmd>Mason<cr>', { desc = '[M]ason', silent = true })
 vim.keymap.set('n', '<leader>un', vim.cmd.UndotreeToggle, { desc = 'Toggle [UN]do tree' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
