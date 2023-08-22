@@ -54,7 +54,21 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
-
+  {
+    -- Go NVIM
+    'ray-x/go.nvim',
+    dependencies = { -- optional packages
+      'ray-x/guihua.lua',
+      'neovim/nvim-lspconfig',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('go').setup()
+    end,
+    event = { 'CmdlineEnter' },
+    ft = { 'go', 'gomod' },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -404,7 +418,16 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  gopls = {},
+  gopls = {
+    gopls = {
+      usePlaceholders = true,
+      completeUnimported = true,
+      analyses = {
+        unreachable = true,
+        unusedparams = true,
+      }
+    }
+  },
   pyright = {},
   rust_analyzer = {},
   tailwindcss = {},
@@ -501,11 +524,12 @@ cmp.setup.filetype('sql', {
 vim.keymap.set({ 'n' }, '<leader>f', function()
   return vim.lsp.buf.format { async = true }
 end, { desc = '[F]ormat' })
-vim.keymap.set({ 'n' }, '<leader>gg', '<cmd>Git<cr>', { silent = true })
-vim.keymap.set({ 'n' }, '<leader>gw', '<cmd>Gwrite<cr>', { silent = true })
-vim.keymap.set({ 'n' }, '<leader>gc', '<cmd>Git commit<cr>', { silent = true })
-vim.keymap.set({ 'n' }, '<leader>gp', '<cmd>Git push<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<leader>gg', '<cmd>Git<cr>', { desc = '[G]it status', silent = true })
+vim.keymap.set({ 'n' }, '<leader>gw', '<cmd>Gwrite<cr>', { desc = '[G]it [w]rite', silent = true })
+vim.keymap.set({ 'n' }, '<leader>gc', '<cmd>Git commit<cr>', { desc = '[G]it [c]ommit', silent = true })
+vim.keymap.set({ 'n' }, '<leader>gp', '<cmd>Git push<cr>', { desc = '[G]it [p]ush', silent = true })
 vim.keymap.set({ 'n' }, '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy', silent = true })
+vim.keymap.set({ 'n' }, '<leader>du', '<cmd>DBUI<cr>', { desc = '[D]atabse [U]I', silent = true })
 vim.keymap.set({ 'n' }, '<leader>m', '<cmd>Mason<cr>', { desc = '[M]ason', silent = true })
 vim.keymap.set('n', '<leader>un', vim.cmd.UndotreeToggle, { desc = 'Toggle [UN]do tree' })
 
