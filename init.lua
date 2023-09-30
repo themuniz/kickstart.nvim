@@ -260,6 +260,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- [[Set html as htmldjango ]]
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' },
+  { pattern = { '*.html', '*.njk' }, command = 'set filetype=htmldjango' })
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -427,8 +431,8 @@ local servers = {
       analyses = {
         unreachable = true,
         unusedparams = true,
-      }
-    }
+      },
+    },
   },
   pyright = {},
   rust_analyzer = {},
