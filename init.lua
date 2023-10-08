@@ -305,7 +305,7 @@ vim.keymap.set('n', '<leader>sm', require('telescope.builtin').marks, { desc = '
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'markdown', 'markdown_inline', 'lua', 'python', 'rust', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'markdown', 'markdown_inline', 'lua', 'python', 'typescript', 'vimdoc', 'vim', 'sql' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -537,6 +537,8 @@ vim.keymap.set({ 'n' }, '<leader>gp', '<cmd>Git push<cr>', { desc = '[G]it [p]us
 vim.keymap.set({ 'n' }, '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy', silent = true })
 vim.keymap.set({ 'n' }, '<leader>du', '<cmd>DBUI<cr>', { desc = '[D]atabse [U]I', silent = true })
 vim.keymap.set({ 'n' }, '<leader>m', '<cmd>Mason<cr>', { desc = '[M]ason', silent = true })
+-- Change from '' to `` (for js template strings)
+vim.keymap.set({ 'n' }, '<leader>cq', "<cmd>.s/'/`/g<cr>|f`", { desc = '[C]hange [q]uotation mark', silent = true })
 vim.keymap.set('n', '<leader>un', vim.cmd.UndotreeToggle, { desc = 'Toggle [UN]do tree' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
