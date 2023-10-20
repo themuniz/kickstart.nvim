@@ -5,7 +5,6 @@ return {
     null_ls.setup {
       sources = {
         null_ls.builtins.formatting.prettier,
-        null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.autopep8,
         null_ls.builtins.formatting.sqlfluff,
         null_ls.builtins.formatting.shfmt,
@@ -15,7 +14,6 @@ return {
         null_ls.builtins.formatting.djlint.with {
           filetypes = { 'html', 'jinja', 'htmldjango' },
         },
-        null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.djlint.with {
           filetypes = { 'html', 'jinja', 'htmldjango' },
         },
