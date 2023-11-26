@@ -17,8 +17,8 @@ return {
         null_ls.builtins.diagnostics.djlint.with {
           filetypes = { 'html', 'jinja', 'htmldjango' },
         },
-        null_ls.builtins.diagnostics.flake8,
         null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.diagnostics.flake8,
       },
     }
   end,
