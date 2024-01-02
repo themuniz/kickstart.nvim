@@ -11,6 +11,9 @@ return {
   'mfussenegger/nvim-dap',
   -- NOTE: And you can specify dependencies as well
   dependencies = {
+    -- Virtual text
+    'theHamsta/nvim-dap-virtual-text',
+
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
 
@@ -42,6 +45,9 @@ return {
       },
     }
 
+    -- Setup virtual text
+    require("nvim-dap-virtual-text").setup()
+
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue)
     vim.keymap.set('n', '<F1>', dap.step_into)
@@ -69,13 +75,13 @@ return {
           step_back = 'b',
           run_last = '▶▶',
           terminate = '⏹',
-          disconnect = "⏏",
+          disconnect = '⏏',
         },
       },
     }
     -- toggle to see last session result. Without this ,you can't see session output in case of unhandled exception.
-    vim.keymap.set("n", "<F7>", dapui.toggle)
-    
+    vim.keymap.set('n', '<F7>', dapui.toggle)
+
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
